@@ -42,8 +42,8 @@ data/
 | Dataset selection            | Completed   |
 | Dataset download             | Completed   |
 | Data exploration             | Completed   |
-| Data cleaning                | In Progress |
-| Data processing and analysis | Not started |
+| Data cleaning                | Completed   |
+| Data processing and analysis | In Progress |
 | Final report                 | Not started |
 
 **For team members:** Check this README, the commit history, and the repository's Issues (if used) for the latest progress.
