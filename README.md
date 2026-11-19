@@ -41,8 +41,8 @@ data/
 | ---------------------------- | ----------- |
 | Dataset selection            | Completed   |
 | Dataset download             | Completed   |
-| Data exploration             | In progress |
-| Data cleaning                | Not started |
+| Data exploration             | Completed   |
+| Data cleaning                | In Progress |
 | Data processing and analysis | Not started |
 | Final report                 | Not started |
 
