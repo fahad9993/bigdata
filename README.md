@@ -1,4 +1,4 @@
-# Big Data Course Project
+# Big Data Assignment
 
 **Course:** WM-ASDS19 — Big Data  
 **Group name:** _To be added_  
