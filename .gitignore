@@ -1,0 +1,45 @@
+# ==========================================
+# 1. Project-Specific Data & Outputs
+# ==========================================
+# Ignore all subfolders inside data (raw, processed, etc.)
+data/*/
+
+# Uncomment the line below if you also want to ignore large trained model files
+# outputs/models/*
+
+# ==========================================
+# 2. Jupyter Notebooks & IDEs
+# ==========================================
+# Ignore Jupyter auto-save checkpoints anywhere in the project
+**/.ipynb_checkpoints/
+
+# Ignore VS Code and PyCharm local settings
+.vscode/
+.idea/
+
+# ==========================================
+# 3. Python Environments & Cache
+# ==========================================
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python bytecode and cache directories
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ==========================================
+# 4. Secrets & OS Clutter
+# ==========================================
+# Environment variables (API keys, database credentials)
+.env
+.env.local
+
+# Windows & macOS system files
+Thumbs.db
+Desktop.ini
+.DS_Store
