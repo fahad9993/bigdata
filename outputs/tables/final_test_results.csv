@@ -1,0 +1,3 @@
+Model,MAE,RMSLE
+Historical Baseline,44.9097,0.7756
+LightGBM with Weather,40.8503,0.624

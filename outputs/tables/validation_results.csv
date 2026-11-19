@@ -1,0 +1,4 @@
+Model,MAE,RMSLE,Training Time (s)
+Historical Baseline,38.6666,0.8672,0.0
+LightGBM without Weather,40.6625,0.7211,77.26
+LightGBM with Weather,35.6031,0.6922,78.77

@@ -43,7 +43,7 @@ data/
 | Dataset download             | Completed   |
 | Data exploration             | Completed   |
 | Data cleaning                | Completed   |
-| Data processing and analysis | In Progress |
-| Final report                 | Not started |
+| Data processing and analysis | Completed   |
+| Final report                 | In Progress |
 
 **For team members:** Check this README, the commit history, and the repository's Issues (if used) for the latest progress.
