@@ -26,3 +26,9 @@ for directory in [
     MODEL_DIR
 ]:
     directory.mkdir(parents=True, exist_ok=True)
+
+# PySpark settings (local execution on an 8 GB Windows laptop)
+SPARK_LOCAL_THREADS = 2
+SPARK_SHUFFLE_PARTITIONS = 8
+# Spark writes a directory of part-*.parquet files rather than one file.
+SPARK_PARQUET_DIR = PROCESSED_DIR / "electricity_data_spark.parquet"
