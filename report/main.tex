@@ -1,0 +1,295 @@
+\documentclass[12pt]{article}
+
+% ---------- Packages ----------
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+%\usepackage{cleveref}
+\usepackage{caption}
+\usepackage{titlesec}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{tocloft}
+\usepackage{float}   % for [H] figure placement
+\usepackage{tabularx}
+\usepackage{array}
+
+\graphicspath{{../outputs/figures/}}
+
+%% ---------- Custom Email ----------
+
+\makeatletter
+\newcommand{\email}[1]{%
+    \begingroup
+    \def\UrlBreaks{\do\@\do\.}% Only allow breaks at @ and .
+    \def\UrlBigBreaks{}%
+    \def\UrlNoBreaks{}%
+    \def\UrlOrds{}% Clear xurl's default breaks after letters/numbers
+    \href{mailto:#1}{\nolinkurl{#1}}%
+    \endgroup
+}
+\makeatother
+
+% ---------- Code listing style (for Python code blocks) ----------
+\lstdefinestyle{python}{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{teal},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    frame=single,
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=4
+}
+\lstset{style=python}
+
+\lstdefinestyle{compact}{
+    language=Python,
+    basicstyle=\ttfamily\scriptsize,   % smaller than \small
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{teal},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    frame=single,
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=2,
+    columns=fullflexible,
+    xleftmargin=1em
+}
+
+% ---------- Cover page color (adjust RGB to match your exact previous shade if needed) ----------
+\definecolor{blue-x}{HTML}{4472C4}
+
+% Optional: nicer listing names
+\renewcommand{\lstlistlistingname}{List of Listings}
+\renewcommand{\lstlistingname}{Listing}
+
+% Skip indentation for paragraphs but keep in between spacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5\baselineskip}
+
+% Control section heading and spacing
+\titleformat{\section}
+{\normalfont\Large\bfseries}
+{\thesection}
+{1em}
+{}
+
+\titlespacing*{\section}
+{0pt}{2.0ex}{0.8ex}
+
+\titleformat{\subsection}
+{\normalfont\large\bfseries}
+{\thesubsection}
+{1em}
+{}
+
+\titlespacing*{\subsection}
+{0pt}{1.5ex}{0.6ex}
+
+\titleformat{\subsubsection}
+{\normalfont\normalsize\bfseries}
+{\thesubsubsection}
+{1em}
+{}
+
+\titlespacing*{\subsubsection}
+{0pt}{1.2ex}{0.4ex}
+
+% Caption setup
+\captionsetup[lstlisting]{
+    skip=10pt
+}
+
+% Shell/PowerShell listing style (no Python keywords, no line numbers)
+\lstdefinestyle{shell}{
+    style=python,
+    language={},
+    numbers=none,
+    keywordstyle={},
+    commentstyle={},
+    stringstyle={},
+    postbreak=\mbox{\textcolor{gray}{$\hookrightarrow$}\space}
+}
+
+% \shot{path}{caption}{label}
+\newcommand{\shot}[3]{%
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth,height=0.38\textheight,keepaspectratio]{#1}
+        \caption{#2}\label{#3}
+\end{figure}}
+
+% \shotpair{path1}{path2}{caption}{label}  (two stacked images, one caption)
+\newcommand{\shotpair}[4]{%
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth,height=0.30\textheight,keepaspectratio]{#1}\\[6pt]
+        \includegraphics[width=\linewidth,height=0.30\textheight,keepaspectratio]{#2}
+        \caption{#3}\label{#4}
+\end{figure}}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COVER PAGE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+    \centering
+    {\fontsize{20pt}{22pt}\selectfont\textbf{\textcolor{blue-x}{``Title of your work''}}}
+
+    \vfill
+
+    {\large\textbf{\underline{WM\_ASDS19: Big Data (Section: A)}}}\\[8pt]
+    {\large\textbf{Spring 2026}}\\[8pt]
+    {\large\textbf{Submission Date: \today}}
+
+    \vfill
+
+    \includegraphics{ju_logo.jpg}
+
+    \vfill
+
+    {\fontsize{18pt}{20pt}\selectfont\textbf{\textcolor{blue-x}{Submitted by}}}
+    \vspace{8pt}
+
+    {\fontsize{14pt}{16pt}\selectfont Group Name: \textbf{Group\_Name}}\\[8pt]
+    {\fontsize{14pt}{16pt}\selectfont Group Members ID: }
+
+    \vfill
+
+    {\fontsize{18pt}{20pt}\selectfont\textbf{\textcolor{blue-x}{Submitted to}}}
+
+    \vspace{8pt}
+
+    {\fontsize{14pt}{16pt}\selectfont Farhana Akter Bina}\\[8pt]
+    {\fontsize{14pt}{16pt}\selectfont Associate Professor}
+
+    \vfill
+
+    {\fontsize{18pt}{20pt}\selectfont\textbf{\textcolor{blue-x}{Department of Statistics \& Data Science}}}\\[8pt]
+
+    {\fontsize{18pt}{20pt}\selectfont\textbf{\textcolor{blue-x}{Jahangirnagar University}}}
+\end{titlepage}
+
+\clearpage
+
+\begingroup
+
+% Suppress page numbers throughout the front matter
+\pagestyle{empty}
+
+% Also suppress page numbers on pages that force the 'plain' style
+\makeatletter
+\let\ps@plain\ps@empty
+\makeatother
+
+% Table of Contents
+\tableofcontents
+\clearpage
+
+% List of Figures
+\listoffigures
+\clearpage
+
+% List of Listings
+\lstlistoflistings
+\clearpage
+
+\endgroup
+
+% Restore page numbering for the main report
+\pagestyle{plain}
+
+% ==========================================
+% Appendix: Work Distribution
+% ==========================================
+
+\clearpage
+\appendix
+
+\section{Work Distribution}
+\label{app:work-distribution}
+
+The individual contributions of the group members
+are presented in \autoref{tab:work-distribution}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Work Distribution Among Group Members}
+    \label{tab:work-distribution}
+
+    \begingroup
+    \small
+    \renewcommand{\arraystretch}{1.8}
+    \setlength{\tabcolsep}{3pt}
+
+    \begin{tabularx}{\textwidth}{
+            |>{\raggedright\arraybackslash}p{3cm}
+            |>{\centering\arraybackslash}p{1.6cm}
+            |>{\raggedright\arraybackslash\hspace{0pt}}p{2.9cm}
+            |>{\raggedright\arraybackslash}X
+            |>{\centering\arraybackslash}p{1.8cm}
+            |>{\centering\arraybackslash}p{2cm}|
+        }
+        \hline
+        \textbf{Name} &
+        \textbf{ID} &
+        \textbf{Email} &
+        \textbf{Contribution} &
+        \textbf{Percentage} &
+        \textbf{Signature} \\
+        \hline
+
+        Md. Fahad Rahman &
+        20251702 &
+        \email{fahad9993@gmail.com}
+        &
+        Description of assigned work &
+        XX\% &
+        \rule{0pt}{1.3cm} \\
+        \hline
+
+        Anik Halder &
+        20251703 &
+        Email address &
+        Description of assigned work &
+        XX\% &
+        \rule{0pt}{1.3cm} \\
+        \hline
+
+        Md. Sohel Rana &
+        20251717 &
+        Email address &
+        Description of assigned work &
+        XX\% &
+        \rule{0pt}{1.3cm} \\
+        \hline
+
+        Md. Ashikul Islam Shohag &
+        20251739 &
+        Email address &
+        Description of assigned work &
+        XX\% &
+        \rule{0pt}{1.3cm} \\
+        \hline
+
+    \end{tabularx}
+    \endgroup
+\end{table}
+
+\end{document}

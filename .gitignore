@@ -43,3 +43,71 @@ __pycache__/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# ==========================================
+# 5. LaTeX Temporary & Auxiliary Files
+# ==========================================
+
+# LaTeX compilation auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.lol
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex.gz(busy)
+*.synctex(busy)
+
+# Bibliography auxiliary files (BibTeX / Biber)
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*-blx.bib
+
+# Navigation and indexing files
+*.nav
+*.snm
+*.vrb
+*.idx
+*.ilg
+*.ind
+*.ist
+*.nlo
+*.nls
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+*.dvi
+*.xdv
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+
+# LaTeX editor and build files
+*.synctex
+*.latexmk
+*.rubbercache
+_latexmk/
+_build/
+
+# ==========================================
+# 6. LaTeX Files to KEEP in GitHub
+# ==========================================
+
+# Do NOT ignore:
+# *.tex           - LaTeX source code
+# *.bib           - Bibliography database
+# *.sty           - Custom LaTeX style files
+# *.cls           - Custom document classes
+# *.png / *.jpg   - Figures and screenshots
+# *.pdf           - Final compiled assignment report
