@@ -1,0 +1,76 @@
+{
+  "spark_version": "3.5.9",
+  "mode": "local[2]",
+  "source_files": {
+    "train.csv": {
+      "bytes": 678616640,
+      "sha256": "2d75e0c4cfa93818647cf5272ef8d48f9cf8e9d3479dde357faae381d1abbcb3"
+    },
+    "building_metadata.csv": {
+      "bytes": 45527,
+      "sha256": "357bf585047359e9dfbaef2935453429f8ec19e5e80c08a8eb066789f28c4070"
+    },
+    "weather_train.csv": {
+      "bytes": 7450075,
+      "sha256": "81022191f16dacc21494c15dac7975611cb39922fc7332e419a857cbb00cc125"
+    }
+  },
+  "source_total_bytes": 686112242,
+  "parquet_bytes": 51928078,
+  "air_temperature_coverage_percent": 99.58,
+  "comparison": {
+    "raw_meter_rows": {
+      "pyspark": 20216100,
+      "duckdb": 20216100,
+      "match": true
+    },
+    "raw_electricity_rows": {
+      "pyspark": 12060910,
+      "duckdb": 12060910,
+      "match": true
+    },
+    "processed_rows": {
+      "pyspark": 11152501,
+      "duckdb": 11152501,
+      "match": true
+    },
+    "rows_with_air_temperature": {
+      "pyspark": 11105485,
+      "duckdb": 11105485,
+      "match": true
+    },
+    "first_timestamp": {
+      "pyspark": "2016-01-01 00:00:00",
+      "duckdb": "2016-01-01 00:00:00",
+      "match": true
+    },
+    "last_timestamp": {
+      "pyspark": "2016-12-31 23:00:00",
+      "duckdb": "2016-12-31 23:00:00",
+      "match": true
+    },
+    "train_rows": {
+      "pyspark": 8321304,
+      "duckdb": 8321304,
+      "match": true
+    },
+    "validation_rows": {
+      "pyspark": 1887642,
+      "duckdb": 1887642,
+      "match": true
+    },
+    "test_rows": {
+      "pyspark": 943555,
+      "duckdb": 943555,
+      "match": true
+    }
+  },
+  "all_checks_match": true,
+  "summary_rows": 168,
+  "wall_seconds": {
+    "pyspark_meter_count": 11.12,
+    "pyspark_preprocess_write": 40.93,
+    "pyspark_parquet_audit": 1.71,
+    "pyspark_weekday_hour_summary": 3.76
+  }
+}
