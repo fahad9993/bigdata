@@ -1,7 +1,7 @@
 # Big Data Assignment
 
 **Course:** WM-ASDS19 — Big Data  
-**Group name:** _To be added_  
+**Group name:** Data Explorers
 **Dataset:** ASHRAE — Great Energy Predictor III  
 **Project title/objective:** _To be finalized_
 
