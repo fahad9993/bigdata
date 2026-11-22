@@ -1,0 +1,40 @@
+{
+  "lightgbm_version": "4.7.0",
+  "pyarrow_version": "26.0.0",
+  "model": "LightGBM with Weather",
+  "input": "Original ASHRAE data preprocessed by PySpark",
+  "training_rows": 8321304,
+  "params": {
+    "objective": "regression",
+    "learning_rate": 0.05,
+    "num_leaves": 31,
+    "max_depth": -1,
+    "max_bin": 127,
+    "num_threads": 2,
+    "seed": 42,
+    "verbosity": -1,
+    "force_col_wise": true,
+    "histogram_pool_size": 128
+  },
+  "boosting_rounds": 200,
+  "batch_rows": 65536,
+  "encoding": {
+    "building_id": 1307,
+    "site_id": 15,
+    "primary_use": 16
+  },
+  "training_data_preparation_seconds": 5.31,
+  "model_fit_seconds": 87.26,
+  "validation": {
+    "rows": 1887642,
+    "mae": 36.3942,
+    "rmsle": 0.7017,
+    "seconds": 21.97
+  },
+  "december_test": {
+    "rows": 943555,
+    "mae": 41.6046,
+    "rmsle": 0.6318,
+    "seconds": 11.2
+  }
+}

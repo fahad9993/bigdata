@@ -1,0 +1,51 @@
+LightGBM 4.7.0. Arrow batches up to 65,536 rows.
+Prepared 8,321,304 training rows in 5.31 seconds.
+Fitting 200 LightGBM trees.
+Built 25 of 200 trees.
+Built 50 of 200 trees.
+Built 75 of 200 trees.
+Built 100 of 200 trees.
+Built 125 of 200 trees.
+Built 150 of 200 trees.
+Built 175 of 200 trees.
+Built 200 of 200 trees.
+{
+  "lightgbm_version": "4.7.0",
+  "pyarrow_version": "26.0.0",
+  "model": "LightGBM with Weather",
+  "input": "Original ASHRAE data preprocessed by PySpark",
+  "training_rows": 8321304,
+  "params": {
+    "objective": "regression",
+    "learning_rate": 0.05,
+    "num_leaves": 31,
+    "max_depth": -1,
+    "max_bin": 127,
+    "num_threads": 2,
+    "seed": 42,
+    "verbosity": -1,
+    "force_col_wise": true,
+    "histogram_pool_size": 128
+  },
+  "boosting_rounds": 200,
+  "batch_rows": 65536,
+  "encoding": {
+    "building_id": 1307,
+    "site_id": 15,
+    "primary_use": 16
+  },
+  "training_data_preparation_seconds": 5.31,
+  "model_fit_seconds": 87.26,
+  "validation": {
+    "rows": 1887642,
+    "mae": 36.3942,
+    "rmsle": 0.7017,
+    "seconds": 21.97
+  },
+  "december_test": {
+    "rows": 943555,
+    "mae": 41.6046,
+    "rmsle": 0.6318,
+    "seconds": 11.2
+  }
+}
