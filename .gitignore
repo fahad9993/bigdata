@@ -111,3 +111,9 @@ _build/
 # *.cls           - Custom document classes
 # *.png / *.jpg   - Figures and screenshots
 # *.pdf           - Final compiled assignment report
+
+# =========================================
+# Powershell log files
+# =========================================
+
+ps_logs/
