@@ -3,7 +3,7 @@
 **Course:** WM-ASDS19 — Big Data  
 **Group name:** Data Explorers
 **Dataset:** ASHRAE — Great Energy Predictor III  
-**Project title/objective:** _To be finalized_
+**Project title/objective:** Large-Scale Analysis and Prediction of Building Electricity Consumption Using Weather and Building Characteristics
 
 ## Team Members
 
@@ -35,7 +35,7 @@ data/
 
 ## Project Updates
 
-**Last updated:** 19 November 2026
+**Last updated:** 22 November 2026
 
 | Task                         | Status      |
 | ---------------------------- | ----------- |
@@ -44,6 +44,8 @@ data/
 | Data exploration             | Completed   |
 | Data cleaning                | Completed   |
 | Data processing and analysis | Completed   |
-| Final report                 | In Progress |
+| Final report                 | Draft complete |
+
+[Report PDF](report/main.pdf) · [Practical application notebook](notebooks/05_Model_Application.ipynb)
 
 **For team members:** Check this README, the commit history, and the repository's Issues (if used) for the latest progress.

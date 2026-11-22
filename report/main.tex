@@ -8,6 +8,10 @@
 \usepackage{xcolor}
 \usepackage{amsmath}
 \usepackage{booktabs}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage[backend=biber,style=apa]{biblatex}
+\addbibresource{reference.bib}
 \usepackage[hidelinks]{hyperref}
 \usepackage{xurl}
 %\usepackage{cleveref}
@@ -109,11 +113,6 @@
 \titlespacing*{\subsubsection}
 {0pt}{1.2ex}{0.4ex}
 
-% Caption setup
-\captionsetup[lstlisting]{
-    skip=10pt
-}
-
 % Shell/PowerShell listing style (no Python keywords, no line numbers)
 \lstdefinestyle{shell}{
     style=python,
@@ -150,7 +149,7 @@
 
 \begin{titlepage}
     \centering
-    {\fontsize{20pt}{22pt}\selectfont\textbf{\textcolor{blue-x}{``Title of your work''}}}
+    {\fontsize{20pt}{22pt}\selectfont\textbf{\textcolor{blue-x}{Large-Scale Analysis and Prediction of Building Electricity Consumption Using Weather and Building Characteristics}}}
 
     \vfill
 
@@ -167,7 +166,7 @@
     {\fontsize{18pt}{20pt}\selectfont\textbf{\textcolor{blue-x}{Submitted by}}}
     \vspace{8pt}
 
-    {\fontsize{14pt}{16pt}\selectfont Group Name: \textbf{Group\_Name}}\\[8pt]
+    {\fontsize{14pt}{16pt}\selectfont Group Name: \textbf{Data Explorers}}\\[8pt]
     {\fontsize{14pt}{16pt}\selectfont Group Members ID: 20251702, 20251703, 20251717, 20251739}
 
     \vfill
@@ -206,83 +205,432 @@
 \listoffigures
 \clearpage
 
-% List of Listings
-\lstlistoflistings
-\clearpage
 
 \endgroup
 
 % Restore page numbering for the main report
 \pagestyle{plain}
 
-% ================= INTRODUCTION =================
+% =========================================================
 \section{Introduction}
+% =========================================================
 
-\subsection{Background and Motivation}
+Energy consumption prediction is important for improving building
+energy efficiency and supporting effective energy management.
+Large-scale smart meter datasets provide opportunities to investigate
+electricity consumption patterns and develop predictive models.
 
-\subsection{Problem Statement}
+This project analyzes the ASHRAE Great Energy Predictor III dataset
+to investigate how building characteristics, temporal factors, and
+weather conditions relate to electricity consumption.
 
-\subsection{Objectives of the Study}
+\subsection{Objectives}
 
-% ================= DATASET DESCRIPTION =================
+The main objectives of this study are:
+\begin{itemize}
+    \item To process and analyze large-scale building energy data.
+    \item To identify temporal and building-specific electricity
+        consumption patterns.
+    \item To investigate the relationship between weather conditions
+        and electricity consumption.
+    \item To develop a predictive model using LightGBM.
+    \item To evaluate the contribution of weather variables to
+        prediction accuracy.
+\end{itemize}
+
+% =========================================================
 \section{Dataset Description}
+% =========================================================
 
-\subsection{Data Source and Overview}
+\subsection{Data Source}
 
-\subsection{Dataset Structure and Variables}
+The dataset was obtained from the ASHRAE Great Energy Predictor III
+competition on Kaggle~\parencite{ashrae}. The complete download contains
+approximately 2.43 GiB of CSV files, including training data,
+competition test data, weather observations, and building metadata.
 
-\subsection{Data Quality and Initial Observations}
+The analysis used labeled meter readings, building metadata, and weather observations for the training period.
 
-% ================= METHODOLOGY =================
+\subsection{Dataset Characteristics}
+
+The original training dataset contains 20,216,100 hourly meter
+observations across four meter categories: electricity, chilled
+water, steam, and hot water.
+
+This study focuses on electricity consumption (meter = 0),
+which initially contains 12,060,910 observations.
+
+The building metadata provides information such as building type,
+site identification, and floor area. Weather data includes
+air temperature, dew-point temperature, and wind speed.
+
+% =========================================================
 \section{Methodology}
+% =========================================================
 
 \subsection{Big Data Processing Framework}
 
-\subsection{Data Cleaning and Preprocessing}
+DuckDB was used for the primary data processing workflow,
+including data inspection, filtering, joining, aggregation,
+and preparation of model-ready data.
+
+PySpark was independently used to reproduce the preprocessing
+workflow and verify the resulting dataset statistics.
+The processed data were stored in Apache Parquet format
+for efficient subsequent analysis.
+
+\subsection{Data Preprocessing}
+
+Initial data inspection identified abnormal electricity readings,
+particularly extended periods of zero consumption at Site 0.
+
+To reduce the influence of these questionable observations,
+Site 0 was excluded from the electricity analysis.
+
+\autoref{fig:site-zero} shows how the share of zero electricity readings
+at Site 0 varied by month.
+
+\shot{monthly_percentage_of_zero_electricity_readings_site0.png}
+     {Monthly share of zero electricity readings at Site 0.}
+     {fig:site-zero}
+
+After filtering and integrating the relevant datasets,
+11,152,501 electricity observations were retained.
 
 \subsection{Data Integration and Feature Engineering}
 
+Electricity readings were joined with building metadata using
+building identifiers. Weather observations were subsequently
+joined using site identifiers and timestamps.
+
+Temporal variables, including hour, day of week, and month,
+were extracted from timestamps.
+
+The building and calendar predictors were building ID, site ID, primary
+use, floor area, hour, day of week, and month. The weather predictors were
+air temperature, dew-point temperature, and wind speed.
+
+Air-temperature observations were available for 99.58\%
+of the processed records.
+
 \subsection{Exploratory Data Analysis}
 
-\subsection{Predictive Modeling}
-\subsubsection{Historical Baseline Model}
-\subsubsection{LightGBM Regression Model}
-\subsubsection{Weather Feature Contribution}
+Exploratory data analysis was conducted to investigate
+electricity consumption patterns across different hours,
+building categories, and weather conditions.
 
-\subsection{Training, Validation, and Test Strategy}
+A weekday-by-hour heatmap was also developed using PySpark
+to examine the combined effect of weekday and hour on
+electricity consumption.
+
+\subsection{Predictive Modeling}
+
+Light Gradient Boosting Machine (LightGBM) was employed
+to predict hourly electricity consumption.
+
+The target variable was transformed using:
+
+\begin{equation}
+    z = \ln(1+y)
+\end{equation}
+
+where $y$ represents the observed electricity meter reading.
+
+Three predictive approaches were evaluated:
+\begin{itemize}
+    \item Historical building-hour median baseline.
+    \item LightGBM without weather variables.
+    \item LightGBM with weather variables.
+\end{itemize}
+
+The historical baseline predicted the training median for each building
+and hour of day. It used the building median for unseen building-hour
+pairs and the overall training median for unseen buildings.
+
+Both LightGBM regressors used 200 boosting rounds, a learning rate of
+0.05, a maximum of 31 leaves per tree, and 127 histogram bins. Building
+ID, site ID, and primary use were encoded as categorical features using
+the training data. Predictions were returned to the original scale with
+$\exp(\hat z)-1$ and clipped at zero. Both runs used the full training
+partition. The second run added the three weather predictors to measure
+their contribution under the same model settings.
+
+\subsection{Training, Validation, and Testing}
+
+A chronological data partitioning strategy was adopted
+to preserve the temporal ordering of observations.
+
+\begin{itemize}
+    \item Training: January--September 2016
+        (8,321,304 observations).
+    \item Validation: October--November 2016
+        (1,887,642 observations).
+    \item Testing: December 2016
+        (943,555 observations).
+\end{itemize}
+
+The model configuration was selected using validation RMSLE. December
+observations from the labeled training file were reserved for the final
+holdout evaluation.
 
 \subsection{Evaluation Metrics}
 
-\clearpage
-% ================= RESULTS =================
+Model performance was evaluated using Mean Absolute Error (MAE)
+and Root Mean Squared Logarithmic Error (RMSLE).
+
+MAE measures the average absolute prediction error,
+while RMSLE evaluates prediction errors on a logarithmic scale.
+
+For $n$ observations with actual readings $y_i$ and predictions $\hat y_i$,
+\begin{align}
+    \mathrm{MAE} &= \frac{1}{n} \sum_{i=1}^{n} |y_i-\hat y_i|, \\
+    \mathrm{RMSLE} &= \sqrt{\frac{1}{n}\sum_{i=1}^{n}
+    \bigl[\ln(1+y_i)-\ln(1+\hat y_i)\bigr]^2}.
+\end{align}
+Lower values indicate better predictive performance.
+
+% =========================================================
+\section{Practical Application}
+\label{sec:practical-application}
+
+A facilities team could use predicted hourly electricity consumption as
+a reference when reviewing meter data. For a given building and hour,
+the team could compare the measured reading with the model estimate and
+investigate persistent differences alongside operating schedules and
+weather conditions.
+
+To demonstrate this workflow, the model application notebook loaded the
+saved LightGBM model with weather features and sampled five
+building-hour observations from the December 2016 holdout using a fixed
+random seed. It supplied the model with building, calendar, and weather
+features and kept the observed meter readings for comparison in
+\autoref{tab:application-predictions}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Observed and predicted electricity readings for five December 2016 observations.}
+    \label{tab:application-predictions}
+    \begin{tabular}{llrr}
+        \toprule
+        Building ID & Date and hour & Observed (kWh) & Predicted (kWh) \\
+        \midrule
+         975 & 26 Dec., 13:00 & 257.00 & 456.67 \\
+         965 & 26 Dec., 17:00 &  20.00 &  28.88 \\
+         431 &  5 Dec., 14:00 &  12.95 &  17.27 \\
+         510 & 22 Dec., 23:00 &   4.28 &   8.44 \\
+        1324 &  7 Dec., 13:00 &  13.00 &  35.94 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The model overpredicted all five readings in this sample. The largest
+difference occurred for building 975, where the prediction exceeded the
+observed reading by 199.67~kWh. An isolated difference can reflect model
+error or a change in building operations, so a facilities team would
+review several hours before drawing conclusions. The aggregate holdout
+metrics in \autoref{tab:test_results} summarize performance across the
+full December partition.
+
 \section{Results and Analysis}
+% =========================================================
 
-\subsection{Exploratory Data Analysis Results}
-\subsubsection{Hourly Electricity Consumption Patterns}
-\subsubsection{Electricity Consumption by Building Category}
-\subsubsection{Relationship Between Temperature and Electricity Consumption}
+\subsection{Hourly Electricity Consumption}
 
-\subsection{Predictive Modeling Results}
-\subsubsection{Validation Performance}
-\subsubsection{Contribution of Weather Variables}
-\subsubsection{Final Test Performance}
+As shown in \autoref{fig:hourly}, mean electricity readings were lowest
+in the early morning and peaked around 14:00. The timing is consistent
+with higher electricity use during normal operating hours.
 
-% ================= DISCUSSION =================
+\shot{average_hourly_electricity_consumption.png}
+     {Mean electricity meter reading by hour of day.}
+     {fig:hourly}
+
+\subsection{Electricity Consumption by Building Category}
+
+To give each building equal weight within its category, we first
+calculated its mean hourly reading per 1,000 square feet, then averaged
+those values by primary use. \autoref{fig:building-use} shows categories
+with at least 20 buildings.
+
+\shot{average_hourly_electricity_use_by_building_category.png}
+     {Mean hourly electricity reading per 1,000 square feet by primary use.}
+     {fig:building-use}
+
+Healthcare buildings exhibited relatively high electricity
+consumption per 1,000 square feet, while residential buildings
+showed comparatively lower values.
+
+These differences may reflect variations in building operations,
+occupancy, and energy requirements.
+
+\subsection{Relationship Between Weather and Electricity Consumption}
+
+\autoref{fig:temperature} shows mean electricity readings grouped into
+2~$^\circ$C outdoor air temperature bins with at least 1,000 readings.
+The resulting pattern was nonlinear.
+
+\shot{outdoor_temperature_and_electricity_consumption.png}
+     {Mean electricity meter reading by outdoor air temperature bin.}
+     {fig:temperature}
+
+Higher average consumption was observed at very low
+temperatures, while consumption varied across warmer
+temperature ranges.
+
+These descriptive relationships may also reflect differences
+in building characteristics and geographical locations.
+
+\subsection{Weekday and Hourly Consumption Heatmap}
+
+\autoref{fig:weekday-hour} shows the mean electricity reading for each
+combination of day of week and hour of day, calculated in PySpark.
+
+\shot{../validation/anik-pyspark/weekday_hour_heatmap.png}
+     {Mean electricity meter reading by day of week and hour of day.}
+     {fig:weekday-hour}
+
+The highest mean reading occurred on Tuesday at 14:00,
+with approximately 204.85 kWh.
+
+Daytime weekday consumption was generally higher than
+weekend consumption, suggesting differences in building
+operating schedules.
+
+\subsection{Validation Performance}
+
+The validation results are summarized in
+\autoref{tab:validation_results}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Validation performance of predictive models}
+    \label{tab:validation_results}
+    \begin{tabular}{lcc}
+        \hline
+        Model & MAE & RMSLE \\
+        \hline
+        Historical Baseline & 38.6666 & 0.8672 \\
+        LightGBM without Weather & 41.0398 & 0.7225 \\
+        LightGBM with Weather & 35.9330 & 0.6939 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+LightGBM without weather lowered RMSLE relative to the historical
+baseline while increasing MAE. The model with weather achieved the
+lowest validation score on both metrics.
+
+\subsection{Contribution of Weather Variables}
+
+Including weather variables reduced validation RMSLE
+from 0.7225 to 0.6939, corresponding to an improvement
+of approximately 4.0\%.
+
+Validation MAE also decreased from 41.0398 to 35.9330,
+representing an improvement of approximately 12.4\%.
+
+These results suggest that weather observations provide
+useful additional information for predicting electricity
+consumption.
+
+\subsection{Final Test Performance}
+
+The selected LightGBM model was evaluated on 943,555 December
+observations. \autoref{tab:test_results} compares its performance with
+the historical baseline.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Final December test performance}
+    \label{tab:test_results}
+    \begin{tabular}{lcc}
+        \hline
+        Model & MAE & RMSLE \\
+        \hline
+        Historical Baseline & 44.9097 & 0.7756 \\
+        LightGBM with Weather & 41.0866 & 0.6245 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+The selected model reduced test RMSLE by approximately
+19.5\% compared with the historical baseline, demonstrating
+improved predictive performance on the held-out month.
+\autoref{fig:actual-predicted} shows the agreement between actual and
+predicted readings, with the diagonal marking equal values.
+
+\shot{actual_vs_predicted_electricity_prediction.png}
+     {Actual and predicted electricity readings for a sample of 10,000 December observations. The axes end at the pooled 99th percentile of actual and predicted readings.}
+     {fig:actual-predicted}
+
+\subsection{Independent PySpark Validation}
+
+The preprocessing workflow was independently reproduced with PySpark
+3.5.9 in local mode using two worker threads.
+
+Nine dataset statistics, including observation counts,
+temporal boundaries, and chronological partition sizes,
+were compared against the DuckDB implementation.
+
+All nine checks matched, supporting the reproducibility
+of the principal data-processing results.
+
+% =========================================================
 \section{Discussion}
+% =========================================================
 
-\subsection{Interpretation of Key Findings}
+\subsection{Interpretation of Findings}
 
-\subsection{Limitations of the Study}
+The findings demonstrate that building characteristics,
+temporal factors, and weather observations can provide
+useful information for electricity consumption prediction.
 
-% ================= CONCLUSION =================
+The controlled comparison between LightGBM models
+indicates that weather variables improve predictive
+performance within the present experimental setup.
+
+The independent PySpark validation further demonstrates
+that the preprocessing workflow can be reproduced
+using an alternative large-scale processing framework.
+
+\subsection{Limitations}
+
+The study focuses only on electricity observations
+and excludes Site 0.
+
+The predictive model was evaluated using a single
+held-out month from 2016. Therefore, its performance
+on other years or previously unseen buildings
+remains uncertain.
+
+Additional data cleaning, feature engineering,
+timezone alignment, and more extensive temporal
+validation may improve future analyses.
+
+% =========================================================
 \section{Conclusion}
+% =========================================================
 
-% ================= REFERENCES =================
-% Use your existing bibliography formatting.
+This project demonstrated a large-scale building electricity
+consumption analysis using DuckDB, PySpark, and LightGBM.
+
+Exploratory analysis revealed variations in electricity
+consumption across time, building categories, and weather
+conditions.
+
+LightGBM with weather variables achieved the best
+validation performance and obtained an RMSLE of 0.6245
+on the December test set.
+
+The results suggest that combining building characteristics,
+temporal information, and weather observations can improve
+electricity consumption prediction.
 
 % ==========================================
 % Appendix: Work Distribution
 % ==========================================
+
+\clearpage
+\printbibliography[heading=bibintoc,title={References}]
 
 \clearpage
 \appendix
