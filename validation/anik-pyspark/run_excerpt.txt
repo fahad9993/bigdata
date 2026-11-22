@@ -1,0 +1,11 @@
+Started (Asia/Dhaka) = 2026-11-22 01:14:24 +0600
+26/11/22 01:14:28 INFO SparkContext: Running Spark version 3.5.9
+26/11/22 01:14:28 INFO SparkContext: OS info Linux, 6.18.58.1-microsoft-standard-WSL2, amd64
+26/11/22 01:14:28 INFO SparkContext: Java version 11.0.33.1
+Counting rows in the original meter file
+Preprocessing the original CSV files and writing Parquet
+Verifying the written Parquet against the DuckDB counts
+Summarizing weekday and hour use in Spark
+  "all_checks_match": true,
+  "summary_rows": 168,
+Finished (Asia/Dhaka) = 2026-11-22 01:15:34 +0600

@@ -1,0 +1,17 @@
+{
+  "train.csv": {
+    "download_file": "train.csv.zip",
+    "download_bytes": 125587731,
+    "csv_bytes": 678616640
+  },
+  "building_metadata.csv": {
+    "download_file": "building_metadata.csv",
+    "download_bytes": 45527,
+    "csv_bytes": 45527
+  },
+  "weather_train.csv": {
+    "download_file": "weather_train.csv.zip",
+    "download_bytes": 1335561,
+    "csv_bytes": 7450075
+  }
+}
