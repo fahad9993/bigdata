@@ -1,0 +1,26 @@
+{
+  "run_dhaka": {
+    "started": "2026-11-22T17:40:03.5010688+06:00",
+    "finished": "2026-11-22T17:42:12.6287106+06:00",
+    "elapsed_seconds": 129.12,
+    "exit_code": 0
+  },
+  "python_worker_memory": {
+    "sampled_dhaka": "2026-11-22T17:42:11.7147924+06:00",
+    "peak_working_set_bytes": 1029689344,
+    "working_set_at_sample_bytes": 138121216
+  },
+  "saved_model_check": {
+    "saved_model_trees": 200,
+    "reloaded_december": {
+      "rows": 943555,
+      "mae": 41.6046,
+      "rmsle": 0.6318,
+      "seconds": 11
+    },
+    "original_exit_code": 0
+  },
+  "input_parquet_parts": 6,
+  "input_parquet_bytes": 51928078,
+  "fitting_script_sha256": "81a6b808fa7970c4785b7ce7a77d72eae7864a36bdce6d5a5d84112170f40663"
+}

@@ -1,0 +1,35 @@
+\subsubsection{LightGBM Input Pipeline Comparison}
+\label{sec:lightgbm-input-pipeline-comparison}
+
+We compared two runs of LightGBM with weather features. The reference run
+prepared its inputs with DuckDB. The independent run prepared Parquet files with
+PySpark, then read up to 65,536 rows per batch with PyArrow into disk-backed
+NumPy arrays before fitting LightGBM. Both runs used the same feature set and
+chronological splits: 8,321,304 training readings from January to September
+2016, 1,887,642 validation readings from October to November, and 943,555
+held-out readings from December.
+
+\begin{table}[htbp]
+    \centering
+    \caption{LightGBM with weather by input pipeline. Lower MAE and RMSLE indicate smaller prediction errors.}
+    \label{tab:lightgbm-input-pipeline-comparison}
+    \begin{tabular}{lrrrr}
+        \toprule
+        & \multicolumn{2}{c}{Oct.--Nov. validation}
+        & \multicolumn{2}{c}{December test} \\
+        \cmidrule(lr){2-3}\cmidrule(lr){4-5}
+        Input pipeline & MAE & RMSLE & MAE & RMSLE \\
+        \midrule
+        DuckDB & \textbf{35.9330} & \textbf{0.6939} & \textbf{41.0866} & \textbf{0.6245} \\
+        PySpark Parquet with batched reads & 36.3942 & 0.7017 & 41.6046 & 0.6318 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The DuckDB-based run recorded lower errors in both evaluation periods. On the
+December set, its MAE and RMSLE were 0.5180 and 0.0073 lower, respectively.
+The batch-reading run successfully fitted all 200 trees, and reloading its saved
+model reproduced the December scores. This shows that full-data fitting from the
+Spark-prepared Parquet was feasible on the test laptop. The error differences
+describe the two complete runs, with the DuckDB-based run providing the main
+results for the study.
