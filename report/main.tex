@@ -201,13 +201,20 @@
 
 % Table of Contents
 \begingroup
-\setlength{\cftbeforesecskip}{10pt}
+\setlength{\cftbeforesecskip}{8pt}
 \tableofcontents
 \endgroup
 \clearpage
 
 % List of Figures
 \listoffigures
+% \clearpage
+
+% List of Tables
+\listoftables
+
+% List of Listings
+%\lstlistoflistings
 \clearpage
 
 \endgroup
@@ -252,6 +259,92 @@ This study focuses on electricity consumption (meter = 0), which initially conta
 
 The building metadata provides information such as building type, site identification, and floor area. Weather data includes air temperature, dew-point temperature, and wind speed.
 
+\subsection{Description of Variables}
+
+The predictive model uses ten input variables representing
+building characteristics, temporal factors, and weather
+conditions, with hourly electricity consumption as the
+target variable.
+
+The building-use classifications follow the ENERGY STAR
+property-type definitions. Temporal variables were derived
+from the original timestamp. \autoref{tab:variable_description}
+summarizes the variables used in the predictive model.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Description of Variables Used in Predictive Modeling}
+    \label{tab:variable_description}
+
+    \begingroup
+    \small
+    \renewcommand{\arraystretch}{1.4}
+    \setlength{\tabcolsep}{5pt}
+
+    \begin{tabularx}{\textwidth}{
+            l
+            l
+            c
+            >{\raggedright\arraybackslash}X
+        }
+        \toprule
+        \textbf{Variable} &
+        \textbf{Type} &
+        \textbf{Unit} &
+        \textbf{Description} \\
+        \midrule
+
+        \multicolumn{4}{l}{\textit{Building Characteristics}} \\
+
+        \texttt{building\_id} & Categorical & -- &
+        Unique building identifier. \\
+
+        \texttt{site\_id} & Categorical & -- &
+        Identifier of the building's site. \\
+
+        \texttt{primary\_use} & Categorical & -- &
+        Primary building-use category based on
+        ENERGY STAR property-type definitions. \\
+
+        \texttt{square\_feet} & Numerical & ft$^2$ &
+        Gross floor area of the building. \\
+
+        \midrule
+        \multicolumn{4}{l}{\textit{Temporal Variables}} \\
+
+        \texttt{hour} & Discrete & -- &
+        Hour of the day (0--23). \\
+
+        \texttt{day\_of\_week} & Discrete & -- &
+        Day of the week (0--6). \\
+
+        \texttt{month} & Discrete & -- &
+        Month of the year (1--12). \\
+
+        \midrule
+        \multicolumn{4}{l}{\textit{Weather Variables}} \\
+
+        \texttt{air\_temperature} & Numerical & $^\circ$C &
+        Outdoor air temperature. \\
+
+        \texttt{dew\_temperature} & Numerical & $^\circ$C &
+        Temperature at which air becomes saturated
+        with water vapor. \\
+
+        \texttt{wind\_speed} & Numerical & m/s &
+        Outdoor wind speed. \\
+
+        \midrule
+        \multicolumn{4}{l}{\textit{Target Variable}} \\
+
+        \texttt{meter\_reading} & Numerical & kWh &
+        Recorded hourly electricity consumption, excluding Site 0. \\
+
+        \bottomrule
+    \end{tabularx}
+    \endgroup
+\end{table}
+
 % =========================================================
 \section{Methodology}
 % =========================================================
@@ -273,9 +366,7 @@ PySpark was independently used to reproduce the preprocessing workflow and verif
 
 \subsection{Data Preprocessing}
 
-Initial data inspection identified abnormal electricity readings, particularly extended periods of zero consumption at Site 0.
-
-To reduce the influence of these questionable observations, Site 0 was excluded from the electricity analysis.
+Site 0 was excluded from the electricity analysis because of prolonged periods of anomalous zero readings and a documented difference in measurement units. The ASHRAE competition documentation identifies Site 0 electricity readings as being in kBTU~\parencite{ashrae}. After excluding Site 0, the analysis treated the remaining electricity readings as kWh throughout.
 
 \autoref{fig:site-zero} shows how the share of zero electricity readings at Site 0 varied by month.
 
