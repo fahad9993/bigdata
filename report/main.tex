@@ -3,6 +3,8 @@
 % ---------- Packages ----------
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
 
 \usepackage{listings}
 \usepackage{xcolor}
@@ -259,6 +261,15 @@ The building metadata provides information such as building type, site identific
 DuckDB was used for the primary data processing workflow, including data inspection, filtering, joining, aggregation, and preparation of model-ready data.
 
 PySpark was independently used to reproduce the preprocessing workflow and verify the resulting dataset statistics. The processed data were stored in Apache Parquet format for efficient subsequent analysis.
+
+\autoref{fig:project-workflow} summarizes the steps from raw data to holdout evaluation.
+
+\begin{figure}[H]
+    \centering
+    \input{workflow-diagram.tex}
+    \caption{Main steps in the electricity prediction study.}
+    \label{fig:project-workflow}
+\end{figure}
 
 \subsection{Data Preprocessing}
 

@@ -1,7 +1,7 @@
 # Big Data Assignment
 
 **Course:** WM-ASDS19 — Big Data  
-**Group name:** Data Explorers
+**Group name:** Data Explorers  
 **Dataset:** ASHRAE — Great Energy Predictor III  
 **Project title/objective:** Large-Scale Analysis and Prediction of Building Electricity Consumption Using Weather and Building Characteristics
 
@@ -37,13 +37,13 @@ data/
 
 **Last updated:** 22 November 2026
 
-| Task                         | Status      |
-| ---------------------------- | ----------- |
-| Dataset selection            | Completed   |
-| Dataset download             | Completed   |
-| Data exploration             | Completed   |
-| Data cleaning                | Completed   |
-| Data processing and analysis | Completed   |
+| Task                         | Status         |
+| ---------------------------- | -------------- |
+| Dataset selection            | Completed      |
+| Dataset download             | Completed      |
+| Data exploration             | Completed      |
+| Data cleaning                | Completed      |
+| Data processing and analysis | Completed      |
 | Final report                 | Draft complete |
 
 [Report PDF](report/main.pdf) · [Practical application notebook](notebooks/05_Model_Application.ipynb)
