@@ -239,6 +239,7 @@ The main objectives of this study are:
     \item To investigate the relationship between weather conditions and electricity consumption.
     \item To develop a predictive model using LightGBM.
     \item To evaluate the contribution of weather variables to prediction accuracy.
+    \item To assess the relative importance of individual predictors and feature groups in the fitted LightGBM model.
 \end{itemize}
 
 % =========================================================
@@ -441,6 +442,27 @@ For $n$ observations with actual readings $y_i$ and predictions $\hat y_i$,
 \end{align}
 Lower values indicate better predictive performance.
 
+\subsection{Feature Importance}
+
+Gain-based feature importance was extracted from the final
+fitted LightGBM model without retraining.
+
+For predictor $j$, the normalized gain was calculated as
+
+\begin{equation}
+    I_j =
+    \frac{G_j}{\sum_{k=1}^{p} G_k}\times 100,
+\end{equation}
+
+where $G_j$ is its accumulated split gain and $p=10$ is
+the number of predictors.
+
+Group-wise importance was calculated by summing the
+normalized gains of building, temporal, and weather
+predictors. These measures describe contributions to the
+training objective rather than statistical significance
+or explained variance.
+
 % =========================================================
 \section{Practical Application}
 \label{sec:practical-application}
@@ -568,6 +590,26 @@ The selected model reduced test RMSLE by approximately 19.5\% compared with the 
 {Actual and predicted electricity readings for a sample of 10,000 December observations. The axes end at the pooled 99th percentile of actual and predicted readings.}
 {fig:actual-predicted}
 
+\subsection{Feature Importance Analysis}
+
+\autoref{fig:feature-importance} presents the normalized
+gain and split frequency of each predictor in the
+selected LightGBM model.
+
+\shot{lightgbm_feature_importance.png}
+{Gain-based feature importance of the selected LightGBM
+    model. The panels use different horizontal scales to
+improve the visibility of lower-importance predictors.}
+{fig:feature-importance}
+
+Building ID and floor area accounted for 97.04\% of the
+total split gain. The building, temporal, and weather
+groups accounted for 97.33\%, 2.25\%, and 0.43\%,
+respectively.
+
+Air temperature had the highest gain among the three
+weather predictors.
+
 \subsection{Independent PySpark Validation}
 
 The preprocessing workflow was independently reproduced with PySpark 3.5.9 in local mode using two worker threads.
@@ -586,7 +628,11 @@ All nine checks matched, supporting the reproducibility of the principal data-pr
 
 The findings demonstrate that building characteristics, temporal factors, and weather observations can provide useful information for electricity consumption prediction.
 
-The controlled comparison between LightGBM models indicates that weather variables improve predictive performance within the present experimental setup.
+Building identity and floor area dominated the gain-based importance ranking. Building identity may capture unobserved building-specific operational characteristics, while floor area reflects building size. The relatively low gain of site ID and primary use may partly reflect information shared with building identity.
+
+Although weather predictors accounted for only 0.43\% of total split gain, their inclusion reduced validation MAE by 12.44\% and RMSLE by 3.96\%.
+
+The two results are complementary: gain measures accumulated improvement in the training objective, whereas the weather ablation experiment measures the change in predictive performance on validation observations.
 
 The independent PySpark validation further demonstrates that the preprocessing workflow can be reproduced using an alternative large-scale processing framework.
 
@@ -594,9 +640,10 @@ The independent PySpark validation further demonstrates that the preprocessing w
 
 The study focuses only on electricity observations and excludes Site 0.
 
-The predictive model was evaluated using a single held-out month from 2016. Therefore, its performance on other years or previously unseen buildings remains uncertain.
+The predictive model was evaluated using a single held-out month from 2016. Therefore, its performance on other years or previously unseen buildings remains uncertain, particularly given the high importance of building ID.
 
-Additional data cleaning, feature engineering, timezone alignment, and more extensive temporal validation may improve future analyses.
+Gain-based importance may be influenced by the number of possible splits and overlapping information among predictors. It does not establish causal effects, statistical significance, or the individual reduction in predictive error attributable
+to each feature.
 
 % =========================================================
 \section{Conclusion}
@@ -608,7 +655,7 @@ Exploratory analysis revealed variations in electricity consumption across time,
 
 LightGBM with weather variables achieved the best validation performance and obtained an RMSLE of 0.6245 on the December test set.
 
-The results suggest that combining building characteristics, temporal information, and weather observations can improve electricity consumption prediction.
+Building ID and floor area accounted for most of the total split gain. Despite their relatively low gain importance, weather variables improved validation performance, demonstrating their additional predictive value within the present experimental setup.
 
 % ==========================================
 % Appendix: Work Distribution
