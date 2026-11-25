@@ -226,20 +226,45 @@
 \section{Introduction}
 % =========================================================
 
-Energy consumption prediction is important for improving building energy efficiency and supporting effective energy management. Large-scale smart meter datasets provide opportunities to investigate electricity consumption patterns and develop predictive models.
+\subsection{Background and Motivation}
 
-This project analyzes the ASHRAE Great Energy Predictor III dataset to investigate how building characteristics, temporal factors, and weather conditions relate to electricity consumption.
+Buildings consume substantial amounts of electricity for lighting, heating, ventilation, air conditioning, and the operation of electrical equipment. Understanding and predicting electricity consumption is important for efficient energy management, demand planning, and reducing operational costs.
+
+The increasing adoption of smart meters and automated building monitoring systems has enabled the collection of large volumes of energy consumption data. When combined with building characteristics and meteorological observations, these data provide opportunities to investigate consumption patterns and develop data-driven predictive models.
+
+However, processing millions of observations presents computational challenges, particularly when working with limited memory and computing resources. Big Data processing technologies and computationally efficient machine learning algorithms can help address these challenges.
+
+\subsection{Problem Statement}
+
+Building electricity consumption varies across buildings, time periods, and weather conditions. These variations may result from differences in building size, functionality, operating schedules, and environmental conditions. The relationships among these factors and electricity consumption may be nonlinear and involve complex interactions.
+
+This study uses the ASHRAE Great Energy Predictor III dataset to develop a large-scale electricity consumption prediction framework. Particular emphasis is placed on investigating whether weather variables provide additional predictive information beyond building characteristics and temporal factors.
+
+The study also examines the relative importance of individual predictors and demonstrates the reproducibility of the data-processing and modeling workflows using alternative data-processing approaches.
 
 \subsection{Objectives}
 
 The main objectives of this study are:
+
 \begin{itemize}
-    \item To process and analyze large-scale building energy data.
-    \item To identify temporal and building-specific electricity consumption patterns.
-    \item To investigate the relationship between weather conditions and electricity consumption.
-    \item To develop a predictive model using LightGBM.
-    \item To evaluate the contribution of weather variables to prediction accuracy.
-    \item To assess the relative importance of individual predictors and feature groups in the fitted LightGBM model.
+    \item To develop an efficient data-processing workflow
+        for large-scale building electricity consumption data.
+
+    \item To investigate temporal, building-specific, and
+        weather-related electricity consumption patterns.
+
+    \item To develop and evaluate a LightGBM-based model
+        for predicting hourly electricity consumption.
+
+    \item To assess the additional predictive value of
+        weather variables.
+
+    \item To evaluate the relative importance of individual
+        predictors and feature groups using gain-based
+        feature importance.
+
+    \item To independently verify the data-processing and
+        model-fitting workflows using PySpark-generated data.
 \end{itemize}
 
 % =========================================================
@@ -248,9 +273,9 @@ The main objectives of this study are:
 
 \subsection{Data Source}
 
-The dataset was obtained from the ASHRAE Great Energy Predictor III competition on Kaggle~\parencite{ashrae}. The complete download contains approximately 2.43 GiB of CSV files, including training data, competition test data, weather observations, and building metadata.
+The dataset was obtained from the ASHRAE Great Energy Predictor III competition on Kaggle~\parencite{ashrae}. The complete competition package contains six uncompressed CSV files totaling 2.61~GB (2.43~GiB).
 
-The analysis used labeled meter readings, building metadata, and weather observations for the training period.
+The three raw files processed in this study totaled 686.11~MB (654.33~MiB). They contain labeled meter readings (\nolinkurl{train.csv}), building metadata (\nolinkurl{building_metadata.csv}), and training weather (\nolinkurl{weather_train.csv}). The December holdout comes from the labeled meter readings.
 
 \subsection{Dataset Characteristics}
 
@@ -317,7 +342,7 @@ summarizes the variables used in the predictive model.
         Hour of the day (0--23). \\
 
         \texttt{day\_of\_week} & Discrete & -- &
-        Day of the week (0--6). \\
+        Day of the week (0 for Sunday through 6 for Saturday). \\
 
         \texttt{month} & Discrete & -- &
         Month of the year (1--12). \\
@@ -361,7 +386,8 @@ PySpark was independently used to reproduce the preprocessing workflow and verif
 \begin{figure}[H]
     \centering
     \input{workflow-diagram.tex}
-    \caption{Main steps in the electricity prediction study.}
+    \caption{Main steps in the electricity prediction study,
+    including model evaluation and feature importance analysis.}
     \label{fig:project-workflow}
 \end{figure}
 
@@ -495,7 +521,7 @@ The model overpredicted all five readings in this sample. The largest difference
 
 \subsection{Hourly Electricity Consumption}
 
-As shown in \autoref{fig:hourly}, mean electricity readings were lowest in the early morning and peaked around 14:00. The timing is consistent with higher electricity use during normal operating hours.
+As shown in \autoref{fig:hourly}, the mean across buildings was lowest at 03:00 (139.42~kWh) and peaked at 14:00 (189.06~kWh). Each building contributes its mean reading for the given hour. The timing is consistent with higher electricity use during normal operating hours.
 
 \shot{average_hourly_electricity_consumption.png}
 {Mean electricity meter reading by hour of day.}
@@ -527,7 +553,7 @@ These descriptive relationships may also reflect differences in building charact
 
 \subsection{Weekday and Hourly Consumption Heatmap}
 
-\autoref{fig:weekday-hour} shows the mean electricity reading for each combination of day of week and hour of day, calculated in PySpark.
+\autoref{fig:weekday-hour} shows mean electricity readings by day of week and hour of day. PySpark first calculated a mean for each building within each cell, then averaged across those buildings.
 
 \shot{../validation/anik-pyspark/weekday_hour_heatmap.png}
 {Mean electricity meter reading by day of week and hour of day.}

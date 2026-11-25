@@ -1,23 +1,23 @@
 \begin{tikzpicture}[
-    node distance=5mm,
-    stage/.style={
-        draw=blue-x!80!black,
-        fill=blue-x!8,
-        rounded corners=2pt,
-        text width=21mm,
-        minimum height=12mm,
-        align=center,
-        inner xsep=2pt,
-        font=\small\sffamily
-    },
-    flow/.style={-{Stealth[length=4pt]}, semithick, draw=blue-x!80!black}
-]
+        node distance=5mm,
+        stage/.style={
+            draw=blue-x!80!black,
+            fill=blue-x!8,
+            rounded corners=2pt,
+            text width=21mm,
+            minimum height=12mm,
+            align=center,
+            inner xsep=2pt,
+            font=\small\sffamily
+        },
+        flow/.style={-{Stealth[length=4pt]}, semithick, draw=blue-x!80!black}
+    ]
     \node[stage] (input) {Raw\\data};
     \node[stage, right=of input] (clean) {Filter\\and join};
     \node[stage, right=of clean] (explore) {Explore\\patterns};
     \node[stage, right=of explore] (split) {Split\\by date};
     \node[stage, right=of split] (models) {Compare\\models};
-    \node[stage, right=of models] (test) {Test on\\December};
+    \node[stage, right=of models] (test) {Evaluate\\and interpret};
     \draw[flow] (input) -- (clean);
     \draw[flow] (clean) -- (explore);
     \draw[flow] (explore) -- (split);
