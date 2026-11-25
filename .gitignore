@@ -123,3 +123,33 @@ ps_logs/
 # =========================================
 
 local_results/
+
+# ==========================================
+# Quarto
+# ==========================================
+
+# Quarto temporary files and directories
+.quarto/
+.quarto_ipynb/
+.jupyter_cache/
+*_files/
+*_cache/
+_freeze/
+.quarto-preview/
+
+# ==========================================
+# Presentation
+# ==========================================
+
+# Temporary Microsoft Office files
+~$*.pptx
+
+# Temporary LaTeX compilation files
+presentation/**/*.aux
+presentation/**/*.log
+presentation/**/*.nav
+presentation/**/*.snm
+presentation/**/*.out
+presentation/**/*.toc
+presentation/**/*.vrb
+presentation/**/*.synctex.gz

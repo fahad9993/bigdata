@@ -1,0 +1,303 @@
+/* Reveal.js academic theme — 1280 x 720 */
+:root {
+  --r-main-font: "Aptos", "Segoe UI", Arial, sans-serif;
+  --r-heading-font: "Aptos Display", "Segoe UI", Arial, sans-serif;
+  --r-main-font-size: 28px;
+  --r-main-color: #24394b;
+  --r-heading-color: #10283f;
+  --r-heading-text-transform: none;
+  --r-heading-font-weight: 700;
+  --r-background-color: #fff;
+  --r-link-color: #087e83;
+}
+.reveal {
+  font-size: 28px;
+  line-height: 1.25;
+}
+.reveal .slides {
+  text-align: left;
+}
+.reveal .slides section {
+  box-sizing: border-box;
+}
+.reveal h2 {
+  font-size: 1.66em;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  margin: 0 0 0.52em;
+  padding-bottom: 0.22em;
+  border-bottom: 3px solid #087e83;
+}
+.reveal h3 {
+  font-size: 1.02em;
+  color: #087e83;
+  margin: 0.25em 0 0.45em;
+  line-height: 1.2;
+}
+.reveal p {
+  margin: 0.35em 0;
+}
+.reveal ul,
+.reveal ol {
+  margin: 0.15em 0 0.35em 1.15em;
+}
+.reveal li {
+  margin: 0.28em 0;
+  padding-left: 0.08em;
+}
+.reveal strong {
+  font-weight: 700;
+}
+.reveal .columns {
+  gap: 28px;
+  align-items: flex-start;
+}
+.reveal .column {
+  min-width: 0;
+  flex-shrink: 1;
+}
+.reveal .lead {
+  font-size: 1.05em;
+  color: #42576a;
+  margin-bottom: 0.65em;
+}
+.reveal .metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 0.65em 0 0.85em;
+}
+.reveal .metric {
+  padding: 16px 20px;
+  background: #edf5f5;
+  border-top: 4px solid #087e83;
+  font-size: 0.8em;
+}
+.reveal .number {
+  font-size: 1.85em;
+  font-weight: 750;
+  color: #087e83;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+.reveal .metric p {
+  margin: 0.12em 0;
+}
+.reveal .pipeline {
+  text-align: center;
+  font-size: 0.82em;
+}
+.reveal .pipe-input {
+  background: #10283f;
+  color: white;
+  padding: 10px 20px;
+  margin: 0 auto 15px;
+  max-width: 62%;
+  border-radius: 5px;
+}
+.reveal .pipe-branches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin: 18px 0;
+}
+.reveal .pipe-node {
+  position: relative;
+  background: #edf5f5;
+  border: 1px solid #c4dddd;
+  padding: 10px 14px;
+  border-radius: 4px;
+}
+.reveal .pipe-node::before {
+  content: "↓";
+  position: absolute;
+  top: -25px;
+  left: 49%;
+  color: #087e83;
+  font-weight: bold;
+}
+.reveal .pipe-node p,
+.reveal .pipe-input p {
+  margin: 0.15em 0;
+}
+.reveal .tag {
+  font-size: 0.68em;
+  color: #087e83;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+.reveal .result-node {
+  background: #f1f4f7;
+  border-color: #d9e2ea;
+}
+.reveal .small-note {
+  font-size: 0.72em;
+  color: #536779;
+  margin-top: 0.55em;
+}
+.reveal img {
+  max-width: 100%;
+  object-fit: contain;
+  margin: 0;
+  box-shadow: none;
+}
+.reveal .plot-pair img {
+  max-height: 355px;
+  width: 100%;
+}
+.reveal .columns figure,
+.reveal .columns .quarto-figure {
+  margin: 0;
+}
+.reveal .columns img {
+  max-height: 370px;
+}
+.reveal .takeaway {
+  background: #edf5f5;
+  border-left: 5px solid #087e83;
+  padding: 10px 18px;
+  font-size: 0.84em;
+  margin-top: 0.5em;
+}
+.reveal table {
+  width: 100%;
+  font-size: 0.74em;
+  margin: 0.25em 0 0.55em;
+  border-collapse: collapse;
+}
+.reveal table th {
+  background: #10283f;
+  color: white;
+  font-weight: 600;
+}
+.reveal table th,
+.reveal table td {
+  padding: 0.36em 0.48em;
+  border-bottom: 1px solid #d5e0e7;
+}
+.reveal table tbody tr:nth-child(even) {
+  background: #f2f6f8;
+}
+.reveal table td strong {
+  color: #087e83;
+}
+.reveal .feature-list {
+  font-size: 0.8em;
+  background: #f2f6f8;
+  padding: 12px 16px;
+  margin-top: 0.6em;
+  line-height: 1.5;
+}
+.reveal .splitbar {
+  display: flex;
+  height: 36px;
+  gap: 3px;
+  margin: 0.55em 0;
+  font-size: 0.58em;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+}
+.reveal .splitbar > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.reveal .train {
+  flex: 74.6;
+  background: #10283f;
+}
+.reveal .validation {
+  flex: 16.9;
+  background: #087e83;
+}
+.reveal .test {
+  flex: 8.5;
+  background: #c3dfe0;
+  color: #10283f;
+}
+.reveal .result-callout {
+  background: #edf5f5;
+  border-left: 5px solid #087e83;
+  padding: 10px 15px;
+  font-size: 0.8em;
+}
+.reveal .cover,
+.reveal .closing {
+  color: #f3f8fb;
+}
+.reveal .cover h2:empty {
+  display: none;
+}
+.reveal .cover {
+  padding-top: 18px;
+}
+.reveal .eyebrow {
+  color: #7bd5d2;
+  font-size: 0.65em;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  margin: 0 0 1.4em;
+}
+.reveal .cover-title {
+  font-size: 2.05em;
+  line-height: 1.08;
+  font-weight: 750;
+  letter-spacing: -0.04em;
+  max-width: 1080px;
+}
+.reveal .cover-subtitle {
+  font-size: 1.05em;
+  color: #b8d6e4;
+  margin-top: 0.6em;
+}
+.reveal .cover-rule {
+  width: 115px;
+  height: 4px;
+  background: #49c3c0;
+  margin: 24px 0;
+}
+.reveal .members {
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+.reveal .cover-footer {
+  margin-top: 25px;
+  color: #b8d6e4;
+  font-size: 0.73em;
+  line-height: 1.5;
+}
+.reveal .closing h2 {
+  color: white;
+  border-color: #49c3c0;
+}
+.reveal .closing h3 {
+  color: #7bd5d2;
+}
+.reveal .closing .closing-hero {
+  font-size: 0.9em;
+  margin: 0.6em 0 1.05em;
+}
+.reveal .hero-number {
+  font-size: 2.2em;
+  color: #7bd5d2;
+  font-weight: 750;
+  letter-spacing: -0.045em;
+}
+.reveal .closing .columns {
+  font-size: 0.88em;
+}
+.reveal .thanks {
+  border-top: 1px solid #547082;
+  margin-top: 25px;
+  padding-top: 15px;
+  color: #7bd5d2;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+.reveal .slide-number {
+  font-size: 14px;
+  background: #10283f;
+  color: white;
+  padding: 5px 9px;
+}
