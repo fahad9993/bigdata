@@ -200,10 +200,10 @@
 \makeatother
 
 % Table of Contents
-\begingroup
-\setlength{\cftbeforesecskip}{8pt}
+%\begingroup
+%\setlength{\cftbeforesecskip}{8pt}
 \tableofcontents
-\endgroup
+%\endgroup
 \clearpage
 
 % List of Figures
@@ -247,24 +247,17 @@ The study also examines the relative importance of individual predictors and dem
 The main objectives of this study are:
 
 \begin{itemize}
-    \item To develop an efficient data-processing workflow
-        for large-scale building electricity consumption data.
+    \item To develop an efficient data-processing workflow for large-scale building electricity consumption data.
 
-    \item To investigate temporal, building-specific, and
-        weather-related electricity consumption patterns.
+    \item To investigate temporal, building-specific, and weather-related electricity consumption patterns.
 
-    \item To develop and evaluate a LightGBM-based model
-        for predicting hourly electricity consumption.
+    \item To develop and evaluate a LightGBM-based model for predicting hourly electricity consumption.
 
-    \item To assess the additional predictive value of
-        weather variables.
+    \item To assess the additional predictive value of weather variables.
 
-    \item To evaluate the relative importance of individual
-        predictors and feature groups using gain-based
-        feature importance.
+    \item To evaluate the relative importance of individual predictors and feature groups using gain-based feature importance.
 
-    \item To independently verify the data-processing and
-        model-fitting workflows using PySpark-generated data.
+    \item To independently verify the data-processing and model-fitting workflows using PySpark-generated data.
 \end{itemize}
 
 % =========================================================
@@ -287,15 +280,9 @@ The building metadata provides information such as building type, site identific
 
 \subsection{Description of Variables}
 
-The predictive model uses ten input variables representing
-building characteristics, temporal factors, and weather
-conditions, with hourly electricity consumption as the
-target variable.
+The predictive model uses ten input variables representing building characteristics, temporal factors, and weather conditions, with hourly electricity consumption as the target variable.
 
-The building-use classifications follow the ENERGY STAR
-property-type definitions. Temporal variables were derived
-from the original timestamp. \autoref{tab:variable_description}
-summarizes the variables used in the predictive model.
+The building-use classifications follow the ENERGY STAR property-type definitions.Temporal variables were derived from the original timestamp. \autoref{tab:variable_description} summarizes the variables used in the predictive model.
 
 \begin{table}[htbp]
     \centering
