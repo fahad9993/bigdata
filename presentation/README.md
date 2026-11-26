@@ -2,7 +2,7 @@
 
 ## Final PowerPoint presentation
 
-The final presentation for our Big Data project is available as a [PowerPoint file](Data_Explorers_14_Slide_Presentation.pptx) and on [Google Slides](https://docs.google.com/presentation/d/1qiurnjcADCiUzIlvk-FMd918oSVmURi-/edit?usp=sharing&ouid=117470534552713157665&rtpof=true&sd=true).
+The final presentation for our Big Data project is available as a [PowerPoint file](Data_Explorers_14_Slide_Presentation.pptx) and on [Google Slides](https://docs.google.com/presentation/d/1vwD19ru-nLqDLZtHyEKqVZ7Kg7aC05u-/edit?usp=sharing&ouid=117470534552713157665&rtpof=true&sd=true).
 
 ## Earlier Quarto draft
 
