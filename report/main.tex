@@ -230,7 +230,7 @@
 
 Buildings consume substantial amounts of electricity for lighting, heating, ventilation, air conditioning, and the operation of electrical equipment. Understanding and predicting electricity consumption is important for efficient energy management, demand planning, and reducing operational costs.
 
-The increasing adoption of smart meters and automated building monitoring systems has enabled the collection of large volumes of energy consumption data. When combined with building characteristics and meteorological observations, these data provide opportunities to investigate consumption patterns and develop data-driven predictive models.
+The increasing adoption of smart meters and automated building monitoring systems has enabled the collection of large volumes of energy consumption data. When combined with building characteristics and meteorological observations, these data provide opportunities to investigate consumption patterns and develop data-driven predictive models~\parencite{miller2020building}.
 
 However, processing millions of observations presents computational challenges, particularly when working with limited memory and computing resources. Big Data processing technologies and computationally efficient machine learning algorithms can help address these challenges.
 
@@ -266,7 +266,7 @@ The main objectives of this study are:
 
 \subsection{Data Source}
 
-The dataset was obtained from the ASHRAE Great Energy Predictor III competition on Kaggle~\parencite{ashrae}. The complete competition package contains six uncompressed CSV files totaling 2.61~GB (2.43~GiB).
+The dataset was obtained from the ASHRAE Great Energy Predictor III competition on Kaggle~\parencite{ashrae}. The complete competition package contains six uncompressed CSV files totaling 2.61~GB (2.43~GiB). The competition used part of the Building Data Genome Project 2, a broader collection of hourly energy measurements from non-residential buildings across 19 sites in North America and Europe~\parencite{miller2020building}.
 
 The three raw files processed in this study totaled 686.11~MB (654.33~MiB). They contain labeled meter readings (\nolinkurl{train.csv}), building metadata (\nolinkurl{building_metadata.csv}), and training weather (\nolinkurl{weather_train.csv}). The December holdout comes from the labeled meter readings.
 
@@ -282,7 +282,7 @@ The building metadata provides information such as building type, site identific
 
 The predictive model uses ten input variables representing building characteristics, temporal factors, and weather conditions, with hourly electricity consumption as the target variable.
 
-The building-use classifications follow the ENERGY STAR property-type definitions.Temporal variables were derived from the original timestamp. \autoref{tab:variable_description} summarizes the variables used in the predictive model.
+The building-use classifications follow the ENERGY STAR property-type definitions~\parencite{miller2020building}. Temporal variables were derived from the original timestamp. \autoref{tab:variable_description} summarizes the variables used in the predictive model.
 
 \begin{table}[htbp]
     \centering
@@ -548,7 +548,7 @@ These descriptive relationships may also reflect differences in building charact
 
 The highest mean reading occurred on Tuesday at 14:00, with approximately 204.85 kWh.
 
-Daytime weekday consumption was generally higher than weekend consumption, suggesting differences in building operating schedules.
+Daytime weekday consumption was generally higher than weekend consumption. Given the North American and European geographical coverage of the source data~\parencite{miller2020building}, this pattern is consistent with conventional Monday--Friday working schedules and potentially higher weekday occupancy and operational activity. Individual building schedules and public holidays were not explicitly accounted for.
 
 \subsection{Validation Performance}
 
