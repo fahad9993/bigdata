@@ -151,13 +151,13 @@
 
 \begin{titlepage}
     \centering
-    {\fontsize{20pt}{22pt}\selectfont\textbf{\textcolor{blue-x}{Large-Scale Analysis and Prediction of Building Electricity Consumption Using Weather and Building Characteristics}}}
+    {\singlespacing\fontsize{20pt}{22pt}\selectfont\textbf{\textcolor{blue-x}{Large-Scale Analysis and Prediction of Building Electricity Consumption Using Weather and Building Characteristics}}\par}
 
     \vfill
 
     {\large\textbf{\underline{WM\_ASDS19: Big Data (Section: A)}}}\\[8pt]
     {\large\textbf{Spring 2026}}\\[8pt]
-    {\large\textbf{Submission Date: \today}}
+    {\large\textbf{Submission Date: 27 November 2026}}
 
     \vfill
 
@@ -683,25 +683,27 @@ Building ID and floor area accounted for most of the total split gain. Despite t
 \section{Work Distribution}
 \label{app:work-distribution}
 
-The contributions and percentages of the four group members are summarized below.
+The contributions and percentages of the four group members are summarized in \autoref{tab:work-distribution}.
 
-\begin{table}[htbp]
+\begin{table}[H]
     \centering
     \caption{Work Distribution Among Group Members}
     \label{tab:work-distribution}
 
     \begingroup
     \small
-    \renewcommand{\arraystretch}{1.8}
+    \singlespacing
+    \renewcommand{\arraystretch}{1.3}
     \setlength{\tabcolsep}{2pt}
+    \renewcommand{\tabularxcolumn}[1]{m{#1}}
 
     \begin{tabularx}{\textwidth}{
-            |>{\raggedright\arraybackslash}p{2.8cm}
-            |>{\centering\arraybackslash}p{1.6cm}
-            |>{\raggedright\arraybackslash\hspace{0pt}}p{2.7cm}
-            |>{\raggedright\arraybackslash}X
-            |>{\centering\arraybackslash}p{1.8cm}
-            |>{\centering\arraybackslash}p{2cm}|
+            |>{\raggedright\setlength{\leftskip}{3pt}\arraybackslash}m{2.65cm}
+            |>{\centering\arraybackslash}m{1.73cm}
+            |>{\raggedright\setlength{\leftskip}{3pt}\arraybackslash\hspace{0pt}}m{2.7cm}
+            |>{\raggedright\setlength{\leftskip}{3pt}\arraybackslash}X
+            |>{\centering\arraybackslash}m{2.02cm}
+            |>{\centering\arraybackslash}m{1.8cm}|
         }
         \hline
         \textbf{Name} &
